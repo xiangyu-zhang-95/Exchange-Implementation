@@ -1,0 +1,5 @@
+[
+    {"from_price": "4", "tick_size": "0.01"},
+    {"from_price": "0", "to_price": "1","tick_size": "0.0001"},
+    {"from_price": "1", "to_price": "4","tick_size": "0.005"}
+]
