@@ -16,3 +16,13 @@ test-ticker_size: Test/TestTickerSize.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestTickerSize.cpp $(SRC) -o test1
 	./test1
 	rm test1 TestTickerSize_output
+
+test-all:
+	make test-error_msg
+	echo
+	
+	make test-price4
+	echo
+	
+	make test-ticker_size
+	echo
