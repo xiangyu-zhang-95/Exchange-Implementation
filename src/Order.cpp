@@ -118,7 +118,7 @@ ostream& operator<<(ostream& os, const Order& order) {
     }
 
     assert(order.type == O_Type::ICEBERG);
-    os << "Type: NEW, time: " << order.time << ", id: " << order.id;
+    os << "Type: ICEBERG, time: " << order.time << ", id: " << order.id;
     os << ", symbol: " << order.symbol << ", side: ";
     os << ((order.side == O_Side::BUY)? "BUY": "SELL");
     os << ", quantity: " << order.quant;
