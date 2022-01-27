@@ -33,4 +33,10 @@ private:
 
 std::ostream& operator<<(std::ostream& os, const Price4& p);
 
+
+template <>
+struct std::hash<Price4>
+{
+    std::size_t operator()(const Price4& p) const;
+};
 #endif

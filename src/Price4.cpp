@@ -66,3 +66,7 @@ std::ostream& operator<<(std::ostream& os, const Price4& p) {
     os << p.to_str();
     return os;
 }
+
+std::size_t std::hash<Price4>::operator()(const Price4& p) const {
+    return hash<long>()(p.unscaled());
+}
