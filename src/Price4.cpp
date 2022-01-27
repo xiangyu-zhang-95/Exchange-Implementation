@@ -53,5 +53,16 @@ Price4::Price4(const std::string& str) {
 
 
 std::string Price4::to_str() const{
-    return to_string(float(unscaled_) / scale_);
+    std::string s1 = std::to_string(unscaled_ / scale_);
+    if ((unscaled_ % scale_) == 0){
+        return s1;
+    }
+    std::string s2 = std::to_string(unscaled_ % scale_);
+    s2 = std::string(exp_ - s2.size(), '0') + s2;
+    return s1 + "." + s2;
+}
+
+std::ostream& operator<<(std::ostream& os, const Price4& p) {
+    os << p.to_str();
+    return os;
 }

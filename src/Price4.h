@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cmath>
+#include <iostream>
 
 class Price4 {
 public:
@@ -29,5 +30,7 @@ private:
     static const int scale_;
     static const int base_;
 };
+
+std::ostream& operator<<(std::ostream& os, const Price4& p);
 
 #endif
