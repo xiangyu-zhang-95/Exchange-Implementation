@@ -1,5 +1,5 @@
-from_price: 0.000000, tick_size: 0.000100, to_price: 1.000000
-from_price: 1.000000, tick_size: 0.010000
-from_price: 0.000000, tick_size: 0.000100, to_price: 1.000000
-from_price: 1.000000, tick_size: 0.005000, to_price: 4.000000
-from_price: 4.000000, tick_size: 0.010000
+from_price: 0, tick_size: 0.0001, to_price: 1
+from_price: 1, tick_size: 0.0100
+from_price: 0, tick_size: 0.0001, to_price: 1
+from_price: 1, tick_size: 0.0050, to_price: 4
+from_price: 4, tick_size: 0.0100

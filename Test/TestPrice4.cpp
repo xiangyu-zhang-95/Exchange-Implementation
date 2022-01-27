@@ -32,7 +32,8 @@ int main() {
         cout << e.what() << endl;
     }
 
-    is_same_file("Test/TestPrice4Output", "error_msg");
+    assert(is_same_file("Test/TestPrice4Output", "error_msg"));
+    std::cout << "SUCCESS" << std::endl;
 
     
 }

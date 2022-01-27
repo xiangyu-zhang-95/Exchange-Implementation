@@ -26,6 +26,7 @@ int main() {
     }
     ofs.close();
 
-    is_same_file("Test/TestTickerSizeOutput", "TestTickerSize_output");
+    assert(is_same_file("Test/TestTickerSizeOutput", "TestTickerSize_output"));
+    std::cout << "SUCCESS" << std::endl;
 }
 
