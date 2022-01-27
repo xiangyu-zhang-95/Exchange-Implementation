@@ -20,4 +20,6 @@ private:
 
     static std::ofstream* ptr_ofs;
 };
+
+void error_msg(const std::string&);
 #endif
