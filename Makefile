@@ -24,13 +24,9 @@ test-order: Test/TestOrder.cpp $(SRC) $(HEAD)
 
 test-all:
 	make test-error_msg
-	echo
-	
 	make test-price4
-	echo
-	
 	make test-ticker_size
-	echo
+	make test-order
 
 clean:
-	rm test1 TestOrderOutput TestTickerSize_output error_msg error_msg
+	rm test1 TestOrderOutput TestTickerSize_output error_msg

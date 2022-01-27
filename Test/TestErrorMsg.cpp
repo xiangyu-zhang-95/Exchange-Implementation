@@ -5,6 +5,4 @@
 int main() {
     LogError::stream() << "This a Test Message" << std::endl;
     assert (is_same_file("Test/TestErrorMsgOutput", "error_msg"));
-    std::cout << "SUCCESS" << std::endl;
-
 }

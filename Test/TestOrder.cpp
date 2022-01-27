@@ -19,6 +19,5 @@ int main() {
     }
 
     assert(is_same_file("TestOrderOutput", "Test/TestOrderOutput"));
-    cout << "SUCCESS" << endl;
     return 0;
 }

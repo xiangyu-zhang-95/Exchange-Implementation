@@ -33,7 +33,4 @@ int main() {
     }
 
     assert(is_same_file("Test/TestPrice4Output", "error_msg"));
-    std::cout << "SUCCESS" << std::endl;
-
-    
 }
