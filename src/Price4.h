@@ -39,4 +39,14 @@ struct std::hash<Price4>
 {
     std::size_t operator()(const Price4& p) const;
 };
+
+
+struct less_than{
+    bool operator()(Price4 a, Price4 b) const;
+};
+
+struct greater_than{
+    bool operator()(Price4 a, Price4 b) const;
+};
+
 #endif
