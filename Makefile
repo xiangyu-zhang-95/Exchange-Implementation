@@ -32,6 +32,7 @@ test-all:
 	make test-price4
 	make test-ticker_size
 	make test-order
+	make test-order_flow
 
 clean:
 	rm test1 TestOrderOutput TestTickerSize_output error_msg TestOrderFlowOutput
