@@ -1,5 +1,5 @@
-HEAD = Test/TestUtility.h   src/Price4.h   src/ErrorMessage.h   src/TickerSize.h   src/Order.h
-SRC  = Test/TestUtility.cpp src/Price4.cpp src/ErrorMessage.cpp src/TickerSize.cpp src/Order.cpp
+HEAD = src/OrderFlow.h   Test/TestUtility.h   src/Price4.h   src/ErrorMessage.h   src/TickerSize.h   src/Order.h
+SRC  = src/OrderFlow.cpp Test/TestUtility.cpp src/Price4.cpp src/ErrorMessage.cpp src/TickerSize.cpp src/Order.cpp
 FLAGS = --std=c++11
 
 test-error_msg: Test/TestErrorMsg.cpp $(SRC) $(HEAD)
@@ -22,6 +22,11 @@ test-order: Test/TestOrder.cpp $(SRC) $(HEAD)
 	./test1
 	rm test1 TestOrderOutput
 
+test-order_flow: Test/TestOrderFlow.cpp $(SRC) $(HEAD)
+	g++ $(FLAGS) Test/TestOrderFlow.cpp $(SRC) -o test1
+	./test1
+	rm test1 TestOrderFlowOutput
+
 test-all:
 	make test-error_msg
 	make test-price4
@@ -29,4 +34,4 @@ test-all:
 	make test-order
 
 clean:
-	rm test1 TestOrderOutput TestTickerSize_output error_msg
+	rm test1 TestOrderOutput TestTickerSize_output error_msg TestOrderFlowOutput
