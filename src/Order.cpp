@@ -128,7 +128,7 @@ ostream& operator<<(ostream& os, const Order& order) {
     return os;
 }
 
-Order::Order(const Order& order): tif{order.tif}, time{order.time},
+Order::Order(const Order& order): tif{order.tif},
     time{order.time}, type{order.type}, id{order.id},
     symbol{order.symbol}, side{order.side}, quant{order.quant},
     price{order.price}, hidden{order.hidden} {
