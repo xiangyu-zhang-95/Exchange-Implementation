@@ -32,13 +32,12 @@ public:
 
 class OrderQueue{
 public:
-    // TODO: remove an order and publish feed
-    // void remove(std::deque<VisibleOrder>::iterator) {}
     OrderQueue() : price{"0"}, quantity{0}{}
     OrderQueue(const Price4& p) : price{p}, quantity{0} {}
 
     std::deque<VisibleOrder>::iterator add(const Order&);
-
+    void remove(std::deque<VisibleOrder>::iterator);
+    
     bool empty() {return quantity == 0;}
     
     O_Quant quantity;
