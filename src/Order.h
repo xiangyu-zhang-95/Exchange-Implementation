@@ -41,6 +41,7 @@ public:
     Price4 price;
     O_Quant hidden;
     Order(nlohmann::json);
+    Order(const Order&);
     static std::unordered_map<std::string, O_Tif>  Tif_map;
     static std::unordered_map<std::string, O_Type> Type_map;
     static std::unordered_map<std::string, O_Side> Side_map;

@@ -127,3 +127,10 @@ ostream& operator<<(ostream& os, const Order& order) {
     os << ", hidden: " << order.hidden;
     return os;
 }
+
+Order::Order(const Order& order): tif{order.tif}, time{order.time},
+    time{order.time}, type{order.type}, id{order.id},
+    symbol{order.symbol}, side{order.side}, quant{order.quant},
+    price{order.price}, hidden{order.hidden} {
+}
+
