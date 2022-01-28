@@ -35,7 +35,7 @@ test-feed: Test/TestFeed.cpp $(SRC) $(HEAD)
 test-order_book: Test/TestOrderBook.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestOrderBook.cpp $(SRC) -o test1
 	./test1
-	rm test1 TestOrderBook_output1
+	rm test1 TestOrderBook_output1 TestOrderBook_output2
 
 test-all:
 	make test-error_msg

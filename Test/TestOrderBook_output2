@@ -1,0 +1,8 @@
+time: 1625787614, type: DEPTH_UPDATE, side: bid, price: 140.3000, quantity: 100, action: ADD
+time: 2625787614, type: DEPTH_UPDATE, side: bid, price: 140.3000, quantity: 0, action: DELETE
+time: 1625787615, type: DEPTH_UPDATE, side: bid, price: 140.3000, quantity: 100, action: ADD
+time: 1625787615, type: DEPTH_UPDATE, side: bid, price: 140.3000, quantity: 400, action: MODIFY
+time: 1625787617, type: DEPTH_UPDATE, side: bid, price: 140.2900, quantity: 200, action: ADD
+time: 2625787614, type: DEPTH_UPDATE, side: bid, price: 140.3000, quantity: 300, action: MODIFY
+time: 2625787614, type: DEPTH_UPDATE, side: bid, price: 140.3000, quantity: 0, action: DELETE
+time: 2625787614, type: DEPTH_UPDATE, side: bid, price: 140.2900, quantity: 0, action: DELETE
