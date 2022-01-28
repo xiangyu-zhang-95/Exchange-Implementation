@@ -9,6 +9,7 @@ class Price4 {
 public:
     Price4() = default;
     explicit Price4(long unscaled) : unscaled_(unscaled) {}
+    Price4(const Price4& p): unscaled_(p.unscaled_) {}
     
     // convert from string
     explicit Price4(const std::string& str);
