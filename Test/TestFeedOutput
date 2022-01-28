@@ -1,0 +1,15 @@
+time: 1625787614, type: TRADE, price: 10.2000, quantity: 100
+time: 1625787614, type: TRADE, price: 10.3000, quantity: 100
+time: 1625787614, type: DEPTH_UPDATE, side: ask, price: 10.2000, quantity: 0, action: DELETE
+time: 1625787614, type: DEPTH_UPDATE, side: ask, price: 10.3000, quantity: 600, action: MODIFY
+
+time: 1625787615, type: DEPTH_UPDATE, side: ask, price: 10.2000, quantity: 600, action: ADD
+
+time: 1625787616, type: TRADE, price: 10.0100, quantity: 100
+time: 1625787616, type: TRADE, price: 10.0100, quantity: 200
+time: 1625787616, type: TRADE, price: 10, quantity: 500
+time: 1625787616, type: DEPTH_UPDATE, side: bid, price: 10.0100, quantity: 0, action: DELETE
+time: 1625787616, type: DEPTH_UPDATE, side: bid, price: 10, quantity: 0, action: DELETE
+time: 1625787616, type: DEPTH_UPDATE, side: ask, price: 10, quantity: 0, action: ADD
+
+time: 1625787617, type: DEPTH_UPDATE, side: ask, price: 10.0300, quantity: 0, action: ADD
