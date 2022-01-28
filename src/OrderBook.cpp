@@ -9,21 +9,32 @@
     OrderBook methods.
 */
 void OrderBook::process_cancel(const Order& order) {
-    // OrderQueue* ptr_order_queue = order_map[order.id].first;
-    // auto it = order_map[order.id].second;
-    // ptr_order_queue->remove(it);
-    // if (ptr_order_queue->empty()) {
-    //     Price4 p = ptr_order_queue->price;
-    //     if (bid.find(p)) {
-    //         bid.erase(p);
-    //     }
-    //     else {
-    //         assert (ask.find(p));
-    //         ask.erase(p);
-    //     }
-    // }
-    // order_map.erase(order.id);
-    // return;
+    bool is_bid = (bid.empty())? false: (order.price <= bid.peek()? true: false);
+
+    OrderQueue* ptr_order_queue = order_map[order.id].first;
+    auto it = order_map[order.id].second;
+    ptr_order_queue->remove(it);
+    if (ptr_order_queue->empty()) {
+        Price4 p = ptr_order_queue->price;
+        if (bid.find(p)) {
+            bid.erase(p);
+        }
+        else {
+            assert (ask.find(p));
+            ask.erase(p);
+        }
+
+        Feed f{DEPTH, is_bid? BID: ASK, order.price, ptr_order_queue->quantity,
+               DELETE, order.time};
+        ask.push_feed(f);
+    }
+    else {
+        Feed f{DEPTH, is_bid? BID: ASK, order.price, ptr_order_queue->quantity,
+               MODIFY, order.time};
+        ask.push_feed(f);
+    }
+    order_map.erase(order.id);
+    return;
 }
 
 void OrderBook::process_market_order(const Order& order) {
