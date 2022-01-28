@@ -15,6 +15,7 @@ class OrderBook;
 
 template<class comparator>
 class SideOrderBook {
+    using cmp = comparator;
 public:
     SideOrderBook(OrderBook* ptr): p_order_book{ptr} {}
 
@@ -40,12 +41,11 @@ public:
     void match(const Order& order);
 
 private:
-    void publish();
-
     std::set<Price4, comparator> prices;
     std::unordered_map<Price4, OrderQueue> price_to_queue;
     OrderBook* p_order_book;
 
+    void push_feed(const Feed&);
 };
 
 class OrderBook {
