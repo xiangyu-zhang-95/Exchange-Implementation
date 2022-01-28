@@ -13,3 +13,14 @@ OrderQueue::add(const Order& order) {
     dq_visible.push_back(VisibleOrder(it));
     return --dq_visible.end();
 }
+
+void OrderQueue::remove(std::deque<VisibleOrder>::iterator it) {
+    quantity -= it->quant;
+    if (it->type == NEW) {
+        dq_visible.erase(it);
+        return;
+    }
+
+    dq_invisible.erase(it->p_invisible);
+    dq_visible.erase(it);
+}
