@@ -44,16 +44,16 @@ std::size_t std::hash<F_Act>::operator()(const F_Act& act) const {
 
 std::ostream& operator<<(std::ostream& os, const Feed& feed) {
     os << "time: " << feed.time;
-    os << "type: " << Feed::type_name[feed.type];
+    os << ", type: " << Feed::type_name[feed.type];
     if (feed.type == F_Type::TRADE) {
         os << ", price: " << feed.price;
-        os << ", quantity: " << feed.quant << std::endl;
+        os << ", quantity: " << feed.quant;
         return os;
     }
     os << ", side: " << Feed::side_name[feed.side];
     os << ", price: " << feed.price;
     os << ", quantity: " << feed.quant;
-    os << ", action: " << Feed::act_name[feed.action] << std::endl;
+    os << ", action: " << Feed::act_name[feed.action];
 
     return os;
 }
