@@ -59,7 +59,7 @@ class OrderBook {
     template<class comparator> friend class SideOrderBook;
 
 public:
-    OrderBook(std::ofstream* ptr): bid{this}, ask{this}, p_ofs{ptr} {}
+    OrderBook(std::ostream* ptr): bid{this}, ask{this}, p_ofs{ptr} {}
     OrderBook(const OrderBook&) = delete;
     OrderBook& operator=(const OrderBook&) = delete;
 
@@ -72,7 +72,7 @@ private:
         std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator>
     > order_map;
     std::deque<Feed> dq_feed;
-    std::ofstream* p_ofs;
+    std::ostream* p_ofs;
 
     void process_cancel(const Order& order);
     void process_limit_order(const Order& order);
