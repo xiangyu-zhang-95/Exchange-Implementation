@@ -16,6 +16,7 @@ class OrderBook;
 template<class comparator>
 class SideOrderBook {
     using cmp = comparator;
+    friend class OrderBook;
 public:
     SideOrderBook(OrderBook* ptr): p_order_book{ptr} {
         bool bid = std::is_same<comparator, greater_than>::value;
