@@ -1,5 +1,5 @@
-HEAD = src/Feed.h   src/OrderBook.h   src/OrderFlow.h   Test/TestUtility.h   src/Price4.h   src/ErrorMessage.h   src/TickerSize.h   src/Order.h
-SRC  = src/Feed.cpp src/OrderBook.cpp src/OrderFlow.cpp Test/TestUtility.cpp src/Price4.cpp src/ErrorMessage.cpp src/TickerSize.cpp src/Order.cpp
+HEAD = src/OrderQueue.h   src/Feed.h   src/OrderBook.h   src/OrderFlow.h   Test/TestUtility.h   src/Price4.h   src/ErrorMessage.h   src/TickerSize.h   src/Order.h
+SRC  = src/OrderQueue.cpp src/Feed.cpp src/OrderBook.cpp src/OrderFlow.cpp Test/TestUtility.cpp src/Price4.cpp src/ErrorMessage.cpp src/TickerSize.cpp src/Order.cpp
 FLAGS = --std=c++11
 
 test-error_msg: Test/TestErrorMsg.cpp $(SRC) $(HEAD)
@@ -32,6 +32,11 @@ test-feed: Test/TestFeed.cpp $(SRC) $(HEAD)
 	./test1
 	rm test1 TestFeedOutput
 
+test-order_book: Test/TestOrderBook.cpp $(SRC) $(HEAD)
+	g++ $(FLAGS) Test/TestOrderBook.cpp $(SRC) -o test1
+	./test1
+	rm test1 TestOrderBook_output1
+
 test-all:
 	make test-error_msg
 	make test-price4
@@ -39,10 +44,16 @@ test-all:
 	make test-order
 	make test-order_flow
 	make test-feed
+	make test-order_book
 
 clean:
-	rm test1 TestOrderOutput TestTickerSize_output error_msg TestOrderFlowOutput
+	rm TestOrderBook_output1 TestFeedOutput test1 TestOrderOutput TestTickerSize_output error_msg TestOrderFlowOutput
 
-# order_book:
-# 	g++ $(FLAGS) main.cpp src/Feed.cpp src/OrderBook.cpp src/Price4.cpp src/ErrorMessage.cpp src/Order.cpp -o test1
-# 	./test1
+order_book:
+	g++ $(FLAGS) main.cpp src/OrderQueue.cpp src/Feed.cpp src/OrderBook.cpp src/Price4.cpp src/ErrorMessage.cpp src/Order.cpp -o test1
+	./test1
+
+syntax:
+	g++ $(FLAGS) syntax.cpp -o syntax
+	./syntax
+	rm syntax
