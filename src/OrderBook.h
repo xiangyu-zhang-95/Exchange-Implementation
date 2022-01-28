@@ -17,7 +17,12 @@ template<class comparator>
 class SideOrderBook {
     using cmp = comparator;
 public:
-    SideOrderBook(OrderBook* ptr): p_order_book{ptr} {}
+    SideOrderBook(OrderBook* ptr): p_order_book{ptr} {
+        bool bid = std::is_same<comparator, greater_than>::value;
+        bool ask = std::is_same<comparator, less_than>::value;
+        assert(bid || ask);
+        assert(!(bid && ask));
+    }
 
     SideOrderBook(const SideOrderBook&) = delete;
     SideOrderBook& operator=(const SideOrderBook&) = delete;
