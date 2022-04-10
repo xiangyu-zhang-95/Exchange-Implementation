@@ -13,7 +13,6 @@ test-price4: Test/TestPrice4.cpp $(SRC) $(HEAD)
 test-ticker_size: Test/TestTickerSize.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestTickerSize.cpp $(SRC) -o test1
 	./test1
-	rm -f test1 TestTickerSize_output
 
 test-order: Test/TestOrder.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestOrder.cpp $(SRC) -o test1
@@ -45,6 +44,7 @@ test-all:
 	make test-order_book
 
 clean:
+	rm -f test1 TestTickerSize_output
 	rm -f test1 error_msg
 	rm -f test1 error_msg
 	rm -f TestOrderBook_output1 TestFeedOutput test1 TestOrderOutput 
