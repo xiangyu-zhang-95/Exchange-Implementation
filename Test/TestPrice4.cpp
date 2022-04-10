@@ -15,21 +15,21 @@ int main() {
         Price4("0.0.0");
     }
     catch (runtime_error& e) {
-        cout << e.what() << endl;
+        // cout << e.what() << endl;
     }
 
     try {
         Price4("0.0000001");
     }
     catch (runtime_error& e) {
-        cout << e.what() << endl;
+        // cout << e.what() << endl;
     }
 
     try {
         Price4("0#");
     }
     catch (runtime_error& e) {
-        cout << e.what() << endl;
+        // cout << e.what() << endl;
     }
 
     assert(is_same_file("Test/TestPrice4Output", "error_msg"));

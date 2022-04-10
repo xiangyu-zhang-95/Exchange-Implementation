@@ -5,12 +5,10 @@ FLAGS = --std=c++11
 test-error_msg: Test/TestErrorMsg.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestErrorMsg.cpp $(SRC) -o test1
 	./test1
-	rm -f test1 error_msg
 
 test-price4: Test/TestPrice4.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestPrice4.cpp $(SRC) -o test1
 	./test1
-	rm -f test1 error_msg
 
 test-ticker_size: Test/TestTickerSize.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestTickerSize.cpp $(SRC) -o test1
@@ -47,6 +45,8 @@ test-all:
 	make test-order_book
 
 clean:
+	rm -f test1 error_msg
+	rm -f test1 error_msg
 	rm -f TestOrderBook_output1 TestFeedOutput test1 TestOrderOutput 
 	rm -f TestTickerSize_output error_msg TestOrderFlowOutput
 
