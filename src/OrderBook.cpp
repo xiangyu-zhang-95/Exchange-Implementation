@@ -45,15 +45,18 @@ void OrderBook::process_market_order(const Order& order) {
         if (ask.empty() || (order.price < ask.peek())) {
             return;
         }
-
-        ask.match(order);
+        Order remain = order;
+        ask.match(remain);
+        // ask.match(order);
         return;
     }
 
     if (bid.empty() || (order.price < bid.peek())) {
         return;
     }
-    bid.match(order);
+    Order remain = order;
+    bid.match(remain);
+    // .match(order);
     return;
 
 
@@ -69,7 +72,11 @@ void OrderBook::process_limit_order(const Order& order) {
             return;
         }
 
-        ask.match_and_add(order);
+        Order remain(order);
+        ask.match(remain);
+        if (remain.quant == 0) {
+            bid.add(remain);
+        }
         return;
     }
 
@@ -80,7 +87,11 @@ void OrderBook::process_limit_order(const Order& order) {
         ask.add(order);
         return;
     }
-    bid.match_and_add(order);
+    Order remain(order);
+    bid.match(remain);
+    if (remain.quant == 0) {
+        ask.add(remain);
+    }
     return;
 }
 
@@ -160,10 +171,10 @@ void SideOrderBook<comparator>::add(const Order& order) {
 }
 
 
-template<class comparator>
-void SideOrderBook<comparator>::match_and_add(const Order& order) {
-}
+// template<class comparator>
+// void SideOrderBook<comparator>::match_and_add(const Order& order) {
+// }
 
 template<class comparator>
-void SideOrderBook<comparator>::match(const Order& order) {
+void SideOrderBook<comparator>::match(Order& order) {
 }

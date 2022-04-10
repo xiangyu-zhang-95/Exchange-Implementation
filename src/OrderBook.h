@@ -36,15 +36,12 @@ public:
     //       update order_map
     void add(const Order& order);
     
-    // TODO: generate trades, add remaining orders and publish feed
-    //       orders are of type NEW or ICEBERG
-    //       update order_map
-    void match_and_add(const Order& order);
-
     // TODO: generate trades publish feed
-    //       orders are of type MARKET
+    //       orders are of type MARKET, NEW, ICEBERG
     //       update order_map
-    void match(const Order& order);
+    //       When call finishes, order argument is updated 
+    //          to unmatched portion.
+    void match(Order& order);
 
 private:
     std::set<Price4, comparator> prices;
