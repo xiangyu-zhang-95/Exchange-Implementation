@@ -25,7 +25,6 @@ test-order_flow: Test/TestOrderFlow.cpp $(SRC) $(HEAD)
 test-feed: Test/TestFeed.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestFeed.cpp $(SRC) -o test1
 	./test1
-	rm -f test1 TestFeedOutput
 
 test-order_book: Test/TestOrderBook.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestOrderBook.cpp $(SRC) -o test1
@@ -42,6 +41,7 @@ test-all:
 	make test-order_book
 
 clean:
+	rm -f test1 TestFeedOutput
 	rm -f test1 TestOrderFlowOutput
 	rm -f test1 TestOrderOutput
 	rm -f test1 TestTickerSize_output
