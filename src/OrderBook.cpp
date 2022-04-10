@@ -47,7 +47,6 @@ void OrderBook::process_market_order(const Order& order) {
         }
         Order remain = order;
         ask.match(remain);
-        // ask.match(order);
         return;
     }
 
@@ -56,7 +55,6 @@ void OrderBook::process_market_order(const Order& order) {
     }
     Order remain = order;
     bid.match(remain);
-    // .match(order);
     return;
 
 
@@ -170,10 +168,6 @@ void SideOrderBook<comparator>::add(const Order& order) {
     push_feed(f);
 }
 
-
-// template<class comparator>
-// void SideOrderBook<comparator>::match_and_add(const Order& order) {
-// }
 
 template<class comparator>
 void SideOrderBook<comparator>::match(Order& order) {
