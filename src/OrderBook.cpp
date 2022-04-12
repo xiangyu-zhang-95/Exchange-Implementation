@@ -171,4 +171,25 @@ void SideOrderBook<comparator>::add(const Order& order) {
 
 template<class comparator>
 void SideOrderBook<comparator>::match(Order& order) {
+    bool bid = std::is_same<comparator, greater_than>::value;
+    bool ask = std::is_same<comparator, less_than>::value;
+    assert(bid || ask);
+    assert(!(bid && ask));
+
+    while ((!this->empty()) && (order.quant > 0) && (comparator()(this->peek(), order.price))) {
+        O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
+        this->price_to_queue[this->peek()].match_and_update(
+            order, this->p_order_book->order_map, this->p_order_book->dq_feed
+        );
+        O_Quant q_aftr = this->price_to_queue[this->peek()].quantity;
+
+        if (q_aftr == 0) {
+            Feed f{DEPTH, bid? BID: ASK, order.price, 0, DELETE, order.time};
+            push_feed(f);
+            this->erase(this->peek());
+            continue;
+        }
+        Feed f{DEPTH, bid? BID: ASK, order.price, 0, MODIFY, order.time};
+        push_feed(f);
+    }
 }

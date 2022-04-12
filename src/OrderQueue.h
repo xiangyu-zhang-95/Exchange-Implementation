@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include "Price4.h"
 #include "Order.h"
+#include "Feed.h"
 #include <cassert>
 
 class OrderBook;
@@ -36,6 +37,13 @@ public:
     OrderQueue(const Price4& p) : price{p}, quantity{0} {}
 
     std::deque<VisibleOrder>::iterator add(const Order&);
+    // TODO: match order with this queue. Delete order if all shared matched. 
+    //          Publish Trade Feed per match.
+    void match_and_update(Order&, 
+                        std::unordered_map<O_Id, 
+                            std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator> 
+                        >,
+                        std::deque<Feed>);
     void remove(std::deque<VisibleOrder>::iterator);
     
     bool empty() {return quantity == 0;}

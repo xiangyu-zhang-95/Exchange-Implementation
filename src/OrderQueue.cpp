@@ -24,3 +24,11 @@ void OrderQueue::remove(std::deque<VisibleOrder>::iterator it) {
     dq_invisible.erase(it->p_invisible);
     dq_visible.erase(it);
 }
+
+void OrderQueue::match_and_update(Order&, std::unordered_map<O_Id,
+                            std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator> >,
+                                 std::deque<Feed>) {
+                    
+
+
+}
