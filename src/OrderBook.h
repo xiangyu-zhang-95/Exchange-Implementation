@@ -67,7 +67,7 @@ private:
     BidOrderBook bid;
     AskOrderBook ask;
     std::unordered_map<O_Id, 
-        std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator>
+        std::pair<OrderQueue*, std::list<VisibleOrder>::iterator>
     > order_map;
     std::deque<Feed> dq_feed;
     std::ostream* p_ofs;

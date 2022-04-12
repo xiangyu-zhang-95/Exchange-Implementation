@@ -69,14 +69,14 @@ void OrderBook::process_limit_order(const Order& order) {
             bid.add(order);
             return;
         }
-        std::cout << "process limit order" << std::endl;
+        // std::cout << "process limit order" << std::endl;
         Order remain(order);
-        std::cout << remain << std::endl;
+        // std::cout << remain << std::endl;
         ask.match(remain);
         if (remain.quant > 0) {
             bid.add(remain);
         }
-        std::cout << remain << std::endl;
+        // std::cout << remain << std::endl;
         return;
     }
 
@@ -104,6 +104,7 @@ void OrderBook::publish() {
 }
 
 void OrderBook::process(const Order& order) {
+    std::cout << "process: " << order << std::endl;
     if (order.type == O_Type::CANCEL) {
         this->process_cancel(order);
         this->publish();
@@ -173,29 +174,33 @@ void SideOrderBook<comparator>::add(const Order& order) {
 
 template<class comparator>
 void SideOrderBook<comparator>::match(Order& order) {
-    std::cout << "HERE Match" << std::endl;
+    std::cout << "prcoss order (match) " << std::endl;
     bool bid = std::is_same<comparator, greater_than>::value;
     bool ask = std::is_same<comparator, less_than>::value;
     assert(bid || ask);
     assert(!(bid && ask));
 
     while ((!this->empty()) && (order.quant > 0) && (comparator()(this->peek(), order.price) || this->peek() == order.price)) {
-        std::cout << "in the loop" << std::endl;
+        // std::cout << "in the loop" << std::endl;
         O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
+        Price4 p = this->peek();
         this->price_to_queue[this->peek()].match_and_update(
             order, this->p_order_book->order_map, this->p_order_book->dq_feed
         );
         O_Quant q_aftr = this->price_to_queue[this->peek()].quantity;
+        
 
         if (q_aftr == 0) {
-            Feed f{DEPTH, bid? BID: ASK, order.price, 0, DELETE, order.time};
+            Feed f{DEPTH, bid? BID: ASK, p, 0, DELETE, order.time};
             push_feed(f);
-            std::cout << f << std::endl;
+            // std::cout << f << std::endl;
             this->erase(this->peek());
             continue;
         }
-        Feed f{DEPTH, bid? BID: ASK, order.price, q_aftr, MODIFY, order.time};
+        Feed f{DEPTH, bid? BID: ASK, p, q_aftr, MODIFY, order.time};
         push_feed(f);
-        std::cout << f << std::endl;
+        // std::cout << f << std::endl;
     }
+    std::cout << "prcoss order (match succeed) " << std::endl;
+    std::cout << std::endl;
 }

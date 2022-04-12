@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <set>
+#include <list>
 #include <deque>
 #include <unordered_map>
 #include "Price4.h"
@@ -19,12 +20,12 @@ public:
 
 class VisibleOrder : public Order {
 public:
-    std::deque<InvisibleOrder>::iterator p_invisible;
+    std::list<InvisibleOrder>::iterator p_invisible;
 
     VisibleOrder(const Order& order): Order{order} {
         assert(order.type == NEW);
     }
-    VisibleOrder(std::deque<InvisibleOrder>::iterator ptr):
+    VisibleOrder(std::list<InvisibleOrder>::iterator ptr):
         p_invisible{ptr}, Order{*ptr} {
             assert(ptr->type == ICEBERG);
     }
@@ -36,17 +37,17 @@ public:
     OrderQueue() : price{"0"}, quantity{0}{}
     OrderQueue(const Price4& p) : price{p}, quantity{0} {}
 
-    std::deque<VisibleOrder>::iterator add(const Order&);
+    std::list<VisibleOrder>::iterator add(const Order&);
 
-    std::deque<VisibleOrder>::iterator peek() {return dq_visible.begin();};
+    std::list<VisibleOrder>::iterator peek() {return dq_visible.begin();};
     // TODO: match order with this queue. Delete order if all shared matched. 
     //          Publish Trade Feed per match.
     void match_and_update(Order&, 
                         std::unordered_map<O_Id, 
-                            std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator> 
+                            std::pair<OrderQueue*, std::list<VisibleOrder>::iterator> 
                         >&,
                         std::deque<Feed>&);
-    void remove(std::deque<VisibleOrder>::iterator);
+    void remove(std::list<VisibleOrder>::iterator);
     
     bool empty() {return quantity == 0;}
     
@@ -54,8 +55,8 @@ public:
     Price4 price;
 
 private:
-    std::deque<InvisibleOrder> dq_invisible;
-    std::deque<VisibleOrder> dq_visible;
+    std::list<InvisibleOrder> dq_invisible;
+    std::list<VisibleOrder> dq_visible;
 };
 
 
