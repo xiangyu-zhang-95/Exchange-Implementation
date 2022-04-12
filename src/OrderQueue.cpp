@@ -13,6 +13,11 @@ void OrderQueue::remove(std::list<Order>::iterator it) {
     dq_visible.erase(it);
 }
 
+void iceberg_replenish(Order& order) {
+    order.quant = (order.display <= order.hidden? order.display: order.hidden);
+    order.hidden -= order.quant;
+}
+
 void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
                             std::pair<OrderQueue*, std::list<Order>::iterator>>& order_map,
                                  std::deque<Feed>& dq_feed) {
@@ -26,8 +31,9 @@ void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
             this->quantity -= order.quant;
             order.quant = 0;
             if (order.type == O_Type::ICEBERG) {
-                order.quant = (order.display <= order.hidden? order.display: order.hidden);
-                order.hidden -= order.quant;
+                // order.quant = (order.display <= order.hidden? order.display: order.hidden);
+                // order.hidden -= order.quant;
+                iceberg_replenish(order);
             }
             continue;
         }
@@ -73,8 +79,9 @@ void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
         this->quantity -= ptr->quant;
 
         Order replensh = *ptr;
-        replensh.quant = (replensh.display <= replensh.hidden? replensh.display: replensh.hidden);
-        replensh.hidden -= replensh.quant;
+        iceberg_replenish(replensh);
+        // replensh.quant = (replensh.display <= replensh.hidden? replensh.display: replensh.hidden);
+        // replensh.hidden -= replensh.quant;
         this->quantity += replensh.quant;
 
         dq_visible.erase(ptr);
