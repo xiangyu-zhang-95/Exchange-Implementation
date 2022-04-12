@@ -31,8 +31,6 @@ void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
             this->quantity -= order.quant;
             order.quant = 0;
             if (order.type == O_Type::ICEBERG) {
-                // order.quant = (order.display <= order.hidden? order.display: order.hidden);
-                // order.hidden -= order.quant;
                 iceberg_replenish(order);
             }
             continue;
@@ -80,8 +78,6 @@ void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
 
         Order replensh = *ptr;
         iceberg_replenish(replensh);
-        // replensh.quant = (replensh.display <= replensh.hidden? replensh.display: replensh.hidden);
-        // replensh.hidden -= replensh.quant;
         this->quantity += replensh.quant;
 
         dq_visible.erase(ptr);
