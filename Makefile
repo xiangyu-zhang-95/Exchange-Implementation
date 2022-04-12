@@ -30,6 +30,10 @@ test-order_book: Test/TestOrderBook.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestOrderBook.cpp $(SRC) -o test1
 	./test1
 
+test-order_match: Test/TestOrderMatch.cpp $(SRC) $(HEAD)
+	g++ $(FLAGS) Test/TestOrderMatch.cpp $(SRC) -o test1
+	./test1
+
 test-all:
 	make test-error_msg
 	make test-price4
@@ -49,6 +53,7 @@ clean:
 	rm -f test1 error_msg
 	rm -f TestOrderBook_output1 TestFeedOutput test1 TestOrderOutput 
 	rm -f TestTickerSize_output error_msg TestOrderFlowOutput
+	rm -f TestOrderMatch_output1
 
 order_book:
 	g++ $(FLAGS) main.cpp src/OrderQueue.cpp src/Feed.cpp src/OrderBook.cpp src/Price4.cpp src/ErrorMessage.cpp src/Order.cpp -o test1

@@ -69,12 +69,14 @@ void OrderBook::process_limit_order(const Order& order) {
             bid.add(order);
             return;
         }
-
+        std::cout << "process limit order" << std::endl;
         Order remain(order);
+        std::cout << remain << std::endl;
         ask.match(remain);
-        if (remain.quant == 0) {
+        if (remain.quant > 0) {
             bid.add(remain);
         }
+        std::cout << remain << std::endl;
         return;
     }
 
@@ -87,7 +89,7 @@ void OrderBook::process_limit_order(const Order& order) {
     }
     Order remain(order);
     bid.match(remain);
-    if (remain.quant == 0) {
+    if (remain.quant > 0) {
         ask.add(remain);
     }
     return;
@@ -171,12 +173,14 @@ void SideOrderBook<comparator>::add(const Order& order) {
 
 template<class comparator>
 void SideOrderBook<comparator>::match(Order& order) {
+    std::cout << "HERE Match" << std::endl;
     bool bid = std::is_same<comparator, greater_than>::value;
     bool ask = std::is_same<comparator, less_than>::value;
     assert(bid || ask);
     assert(!(bid && ask));
 
-    while ((!this->empty()) && (order.quant > 0) && (comparator()(this->peek(), order.price))) {
+    while ((!this->empty()) && (order.quant > 0) && (comparator()(this->peek(), order.price) || this->peek() == order.price)) {
+        std::cout << "in the loop" << std::endl;
         O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
         this->price_to_queue[this->peek()].match_and_update(
             order, this->p_order_book->order_map, this->p_order_book->dq_feed
@@ -186,10 +190,12 @@ void SideOrderBook<comparator>::match(Order& order) {
         if (q_aftr == 0) {
             Feed f{DEPTH, bid? BID: ASK, order.price, 0, DELETE, order.time};
             push_feed(f);
+            std::cout << f << std::endl;
             this->erase(this->peek());
             continue;
         }
-        Feed f{DEPTH, bid? BID: ASK, order.price, 0, MODIFY, order.time};
+        Feed f{DEPTH, bid? BID: ASK, order.price, q_aftr, MODIFY, order.time};
         push_feed(f);
+        std::cout << f << std::endl;
     }
 }
