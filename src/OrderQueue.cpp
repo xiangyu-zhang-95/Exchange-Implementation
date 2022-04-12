@@ -76,12 +76,10 @@ void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
         // update orderQueue
         this->quantity -= ptr->quant;
 
-        Order replensh = *ptr;
-        iceberg_replenish(replensh);
-        this->quantity += replensh.quant;
-
+        iceberg_replenish(*ptr);
+        this->quantity += ptr->quant;
+        dq_visible.push_back(*ptr);
         dq_visible.erase(ptr);
-        dq_visible.push_back(replensh);
     }           
 
 }
