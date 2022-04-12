@@ -17,7 +17,7 @@ int main() {
             order_book.process(order_flow.pop());
         }
         ofs.close();
-        // assert(is_same_file("TestOrderMatch_output1", "Test/TestOrderMatch_output1"));
+        assert(is_same_file("TestOrderMatch_output1", "Test/TestOrderMatch_output1"));
     }
 
     return 0;
