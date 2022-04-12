@@ -25,10 +25,38 @@ void OrderQueue::remove(std::deque<VisibleOrder>::iterator it) {
     dq_visible.erase(it);
 }
 
-void OrderQueue::match_and_update(Order&, std::unordered_map<O_Id,
-                            std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator> >,
-                                 std::deque<Feed>) {
-                    
+void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
+                            std::pair<OrderQueue*, std::deque<VisibleOrder>::iterator>>& order_map,
+                                 std::deque<Feed>& dq_feed) {
+    assert(order.type != O_Type::ICEBERG);
+    while ((order.quant > 0) && (this->quantity > 0)) {
+        std::deque<VisibleOrder>::iterator ptr = this->peek();
+        assert(ptr->type != O_Type::ICEBERG);
+        if (ptr->quant > order.quant) {
+            ptr->quant -= order.quant;
+            this->quantity -= order.quant;
+            order.quant = 0;
+            continue;
+        }
 
+        // ptr->quant <= order.quant
+        if (ptr->type != O_Type::ICEBERG) {
+            assert(ptr->type == O_Type::NEW);
+            
+            // erase id
+            assert(order_map.erase(ptr->id) == 1);
+            
+            // publish feed
+            Feed f{F_Type::TRADE, this->price, ptr->quant, order.time};
+            dq_feed.push_back(f);
+
+            // update order
+            order.quant -= ptr->quant;
+
+            // update orderQueue
+            this->quantity -= ptr->quant;
+            this->remove(ptr);
+        }
+    }           
 
 }
