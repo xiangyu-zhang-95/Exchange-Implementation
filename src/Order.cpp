@@ -90,6 +90,7 @@ Order::Order(json j) {
     }
     assert(j.find("hidden") != j.end());
     hidden = j["hidden"];
+    display = quant;
 }
 
 ostream& operator<<(ostream& os, const Order& order) {
@@ -124,12 +125,13 @@ ostream& operator<<(ostream& os, const Order& order) {
     os << ", tif: " << ((order.tif == O_Tif::IOC)? "IOC": ((order.tif == O_Tif::DAY)? "DAY": "GTC"));
     os << ", price: " << order.price;
     os << ", hidden: " << order.hidden;
+    os << ", display: " << order.display;
     return os;
 }
 
 Order::Order(const Order& order): tif{order.tif},
     time{order.time}, type{order.type}, id{order.id},
     symbol{order.symbol}, side{order.side}, quant{order.quant},
-    price{order.price}, hidden{order.hidden} {
+    price{order.price}, hidden{order.hidden}, display{order.display} {
 }
 
