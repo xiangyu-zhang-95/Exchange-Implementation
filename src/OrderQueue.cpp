@@ -28,10 +28,8 @@ void OrderQueue::remove(std::list<VisibleOrder>::iterator it) {
 void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
                             std::pair<OrderQueue*, std::list<VisibleOrder>::iterator>>& order_map,
                                  std::deque<Feed>& dq_feed) {
-    // assert(order.type != O_Type::ICEBERG);
     while ((order.quant > 0) && (this->quantity > 0)) {
         std::list<VisibleOrder>::iterator ptr = this->peek();
-        // assert(ptr->type != O_Type::ICEBERG);
         if (ptr->quant > order.quant) {
             Feed f{F_Type::TRADE, this->price, order.quant, order.time};
             dq_feed.push_back(f);
