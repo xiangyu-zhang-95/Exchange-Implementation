@@ -10,3 +10,7 @@ time: 1625787625, type: TRADE, price: 149, quantity: 20
 time: 1625787625, type: DEPTH_UPDATE, side: ask, price: 149, quantity: 0, action: DELETE
 time: 1625787625, type: TRADE, price: 150, quantity: 60
 time: 1625787625, type: DEPTH_UPDATE, side: ask, price: 150, quantity: 40, action: MODIFY
+time: 1625787626, type: DEPTH_UPDATE, side: ask, price: 155, quantity: 80, action: ADD
+time: 1625787627, type: TRADE, price: 150, quantity: 40
+time: 1625787627, type: DEPTH_UPDATE, side: ask, price: 150, quantity: 0, action: DELETE
+time: 1625787628, type: DEPTH_UPDATE, side: ask, price: 152, quantity: 50, action: ADD

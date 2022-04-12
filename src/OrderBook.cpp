@@ -71,7 +71,7 @@ void OrderBook::process_limit_order(const Order& order) {
         }
         Order remain(order);
         ask.match(remain);
-        if (remain.quant > 0) {
+        if ((remain.quant > 0) && (remain.tif != IOC)) {
             bid.add(remain);
         }
         return;
@@ -86,7 +86,7 @@ void OrderBook::process_limit_order(const Order& order) {
     }
     Order remain(order);
     bid.match(remain);
-    if (remain.quant > 0) {
+    if ((remain.quant > 0) && (remain.tif != IOC)) {
         ask.add(remain);
     }
     return;

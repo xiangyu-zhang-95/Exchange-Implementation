@@ -103,7 +103,6 @@ ostream& operator<<(ostream& os, const Order& order) {
         os << ", symbol: " << order.symbol << ", side: ";
         os << ((order.side == O_Side::BUY)? "BUY": "SELL");
         os << ", quantity: " << order.quant;
-        os << ", tif: " << ((order.tif == O_Tif::IOC)? "IOC": ((order.tif == O_Tif::DAY)? "DAY": "GTC"));
         return os;
     }
 

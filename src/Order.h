@@ -7,6 +7,8 @@
 #include <string>
 #include <iostream>
 
+// Market Order must be IOC
+
 enum O_Tif {
     IOC,
     DAY,
