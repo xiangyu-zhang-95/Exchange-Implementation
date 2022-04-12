@@ -4,27 +4,12 @@ std::list<Order>::iterator
 OrderQueue::add(const Order& order) {
     assert ((order.type == NEW) || (order.type == ICEBERG));
     quantity += order.quant;
-    // if (order.type == NEW) {
-    //     dq_visible.push_back(VisibleOrder(order));
-    //     return --dq_visible.end();
-    // }
-    // dq_invisible.push_back(InvisibleOrder(order));
-    // auto it = --dq_invisible.end();
-    // dq_visible.push_back(VisibleOrder(it));
-    // return --dq_visible.end();
     dq_visible.push_back(Order(order));
     return --dq_visible.end();
 }
 
 void OrderQueue::remove(std::list<Order>::iterator it) {
     quantity -= it->quant;
-    // if (it->type == NEW) {
-    //     dq_visible.erase(it);
-    //     return;
-    // }
-
-    // dq_invisible.erase(it->p_invisible);
-    // dq_visible.erase(it);
     dq_visible.erase(it);
 }
 
@@ -32,7 +17,6 @@ void OrderQueue::match_and_update(Order& order, std::unordered_map<O_Id,
                             std::pair<OrderQueue*, std::list<Order>::iterator>>& order_map,
                                  std::deque<Feed>& dq_feed) {
     while ((order.quant > 0) && (this->quantity > 0)) {
-        // std::list<VisibleOrder>::iterator ptr = this->peek();
         std::list<Order>::iterator ptr = this->peek();
         if (ptr->quant > order.quant) {
             Feed f{F_Type::TRADE, this->price, order.quant, order.time};
