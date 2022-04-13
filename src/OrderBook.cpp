@@ -123,7 +123,8 @@ void SideOrderBook::add(const Order& order) {
             &price_to_queue[order.price], it
         };
 
-        Feed f{DEPTH, (cmp == greater_than)? BID: ASK, order.price, price_to_queue[order.price].quantity, ADD, order.time};
+        Feed f{DEPTH, (cmp == greater_than)? BID: ASK, order.price, 
+                price_to_queue[order.price].quantity, ADD, order.time};
         push_feed(f);
         return;
     }
@@ -132,13 +133,15 @@ void SideOrderBook::add(const Order& order) {
     p_order_book->order_map[order.id] = {
             &price_to_queue[order.price], it
     };
-    Feed f{DEPTH, (cmp == greater_than)? BID: ASK, order.price, price_to_queue[order.price].quantity, MODIFY, order.time};
+    Feed f{DEPTH, (cmp == greater_than)? BID: ASK, order.price, 
+            price_to_queue[order.price].quantity, MODIFY, order.time};
     push_feed(f);
 }
 
 
 void SideOrderBook::match(Order& order) {
-    while ((!this->empty()) && (order.quant > 0) && (cmp(this->peek(), order.price) || this->peek() == order.price)) {
+    while ((!this->empty()) && (order.quant > 0) && 
+            (cmp(this->peek(), order.price) || this->peek() == order.price)) {
         O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
         Price4 p = this->peek();
         this->price_to_queue[this->peek()].match_and_update(
