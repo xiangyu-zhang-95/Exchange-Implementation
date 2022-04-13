@@ -93,22 +93,6 @@ void OrderBook::process(const Order& order) {
             throw std::runtime_error ("Unknown Order Type");
     }
     publish();
-
-    // if (order.type == O_Type::CANCEL) {
-    //     this->process_cancel(order);
-    //     this->publish();
-    //     return;
-    // }
-
-    // if ((order.type == O_Type::NEW)||(order.type == O_Type::ICEBERG)) {
-    //     this->process_limit_order(const_cast<Order&>(order));
-    //     this->publish();
-    //     return;
-    // }
-
-    // assert (order.type == O_Type::MARKET);
-    // this->process_market_order(const_cast<Order&>(order));
-    // this->publish();
 }
 
 
