@@ -41,21 +41,32 @@ void OrderBook::process_cancel(const Order& order) {
 }
 
 void OrderBook::process_market_order(const Order& order) {
-    if (order.side == O_Side::BUY) {
-        if (ask.empty() || (order.price < ask.peek())) {
-            return;
-        }
-        Order remain = order;
-        ask.match(remain);
-        return;
-    }
+    SideOrderBook& match_side = (order.side == O_Side::BUY)? ask: bid;
+    // SideOrderBook add_side   = (order.side == O_Side::BUY)? bid: ask;
 
-    if (bid.empty() || (order.price < bid.peek())) {
+    if (match_side.empty() || (order.price < match_side.peek())) {
         return;
     }
     Order remain = order;
-    bid.match(remain);
+    match_side.match(remain);
     return;
+
+
+    // if (order.side == O_Side::BUY) {
+    //     if (ask.empty() || (order.price < ask.peek())) {
+    //         return;
+    //     }
+    //     Order remain = order;
+    //     ask.match(remain);
+    //     return;
+    // }
+
+    // if (bid.empty() || (order.price < bid.peek())) {
+    //     return;
+    // }
+    // Order remain = order;
+    // bid.match(remain);
+    // return;
 
 
 }
