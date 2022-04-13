@@ -136,11 +136,6 @@ void SideOrderBook::push_feed(const Feed& feed) {
 }
 
 void SideOrderBook::add(const Order& order) {
-    // bool bid = (this->cmp == greater_than);
-    // bool ask = (this->cmp == less_than);
-    // assert(bid || ask);
-    // assert(!(bid && ask));
-
     if (prices.find(order.price) == prices.end()) {
         prices.insert(order.price);
         
@@ -166,11 +161,6 @@ void SideOrderBook::add(const Order& order) {
 
 
 void SideOrderBook::match(Order& order) {
-    // bool bid = (this->cmp == greater_than);
-    // bool ask = (this->cmp == less_than);
-    // assert(bid || ask);
-    // assert(!(bid && ask));
-
     while ((!this->empty()) && (order.quant > 0) && (cmp(this->peek(), order.price) || this->peek() == order.price)) {
         O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
         Price4 p = this->peek();
