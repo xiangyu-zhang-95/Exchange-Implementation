@@ -42,7 +42,6 @@ void OrderBook::process_cancel(const Order& order) {
 
 void OrderBook::process_market_order(const Order& order) {
     SideOrderBook& match_side = (order.side == O_Side::BUY)? ask: bid;
-    // SideOrderBook add_side   = (order.side == O_Side::BUY)? bid: ask;
 
     if (match_side.empty() || (order.price < match_side.peek())) {
         return;
@@ -50,57 +49,56 @@ void OrderBook::process_market_order(const Order& order) {
     Order remain = order;
     match_side.match(remain);
     return;
-
-
-    // if (order.side == O_Side::BUY) {
-    //     if (ask.empty() || (order.price < ask.peek())) {
-    //         return;
-    //     }
-    //     Order remain = order;
-    //     ask.match(remain);
-    //     return;
-    // }
-
-    // if (bid.empty() || (order.price < bid.peek())) {
-    //     return;
-    // }
-    // Order remain = order;
-    // bid.match(remain);
-    // return;
-
-
 }
 
 void OrderBook::process_limit_order(const Order& order) {
-    if (order.side == O_Side::BUY) {
-        if (ask.empty() || (order.price < ask.peek())) {
-            if (order.tif == IOC) {
-                return;
-            }
-            bid.add(order);
-            return;
-        }
-        Order remain(order);
-        ask.match(remain);
-        if ((remain.quant > 0) && (remain.tif != IOC)) {
-            bid.add(remain);
-        }
-        return;
-    }
+    SideOrderBook& match_side = (order.side == O_Side::BUY)? ask: bid;
+    SideOrderBook& put_side   = (order.side == O_Side::BUY)? bid: ask;
 
-    if (bid.empty() || (order.price > bid.peek())) {
+    if (match_side.empty() || match_side.cmp(order.price, match_side.peek())) {
         if (order.tif == IOC) {
             return;
         }
-        ask.add(order);
+        put_side.add(order);
         return;
     }
     Order remain(order);
-    bid.match(remain);
+    match_side.match(remain);
     if ((remain.quant > 0) && (remain.tif != IOC)) {
-        ask.add(remain);
+        put_side.add(remain);
     }
     return;
+    
+
+    // if (order.side == O_Side::BUY) {
+    //     if (ask.empty() || (order.price < ask.peek())) {
+    //         if (order.tif == IOC) {
+    //             return;
+    //         }
+    //         bid.add(order);
+    //         return;
+    //     }
+    //     Order remain(order);
+    //     ask.match(remain);
+    //     if ((remain.quant > 0) && (remain.tif != IOC)) {
+    //         bid.add(remain);
+    //     }
+    //     return;
+    // }
+
+    // if (bid.empty() || (order.price > bid.peek())) {
+    //     if (order.tif == IOC) {
+    //         return;
+    //     }
+    //     ask.add(order);
+    //     return;
+    // }
+    // Order remain(order);
+    // bid.match(remain);
+    // if ((remain.quant > 0) && (remain.tif != IOC)) {
+    //     ask.add(remain);
+    // }
+    // return;
 }
 
 void OrderBook::publish() {
