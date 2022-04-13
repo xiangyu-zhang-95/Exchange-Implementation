@@ -69,8 +69,8 @@ private:
     std::ostream* p_ofs;
 
     void process_cancel(const Order& order);
-    void process_limit_order(const Order& order);
-    void process_market_order(const Order& order);
+    void process_limit_order(Order& order);
+    void process_market_order(Order& order);
     void publish();
 };
 

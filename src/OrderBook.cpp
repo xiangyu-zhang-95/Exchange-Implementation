@@ -40,7 +40,7 @@ void OrderBook::process_cancel(const Order& order) {
     return;
 }
 
-void OrderBook::process_market_order(const Order& order) {
+void OrderBook::process_market_order(Order& order) {
     SideOrderBook& match_side = (order.side == O_Side::BUY)? ask: bid;
 
     if (match_side.empty() || (order.price < match_side.peek())) {
@@ -51,7 +51,7 @@ void OrderBook::process_market_order(const Order& order) {
     return;
 }
 
-void OrderBook::process_limit_order(const Order& order) {
+void OrderBook::process_limit_order(Order& order) {
     SideOrderBook& match_side = (order.side == O_Side::BUY)? ask: bid;
     SideOrderBook& put_side   = (order.side == O_Side::BUY)? bid: ask;
 
@@ -86,13 +86,13 @@ void OrderBook::process(const Order& order) {
     }
 
     if ((order.type == O_Type::NEW)||(order.type == O_Type::ICEBERG)) {
-        this->process_limit_order(order);
+        this->process_limit_order(const_cast<Order&>(order));
         this->publish();
         return;
     }
 
     assert (order.type == O_Type::MARKET);
-    this->process_market_order(order);
+    this->process_market_order(const_cast<Order&>(order));
     this->publish();
 }
 
