@@ -136,10 +136,10 @@ void SideOrderBook::push_feed(const Feed& feed) {
 }
 
 void SideOrderBook::add(const Order& order) {
-    bool bid = (this->cmp == greater_than);
-    bool ask = (this->cmp == less_than);
-    assert(bid || ask);
-    assert(!(bid && ask));
+    // bool bid = (this->cmp == greater_than);
+    // bool ask = (this->cmp == less_than);
+    // assert(bid || ask);
+    // assert(!(bid && ask));
 
     if (prices.find(order.price) == prices.end()) {
         prices.insert(order.price);
@@ -151,7 +151,7 @@ void SideOrderBook::add(const Order& order) {
             &price_to_queue[order.price], it
         };
 
-        Feed f{DEPTH, bid? BID: ASK, order.price, price_to_queue[order.price].quantity, ADD, order.time};
+        Feed f{DEPTH, (cmp == greater_than)? BID: ASK, order.price, price_to_queue[order.price].quantity, ADD, order.time};
         push_feed(f);
         return;
     }
@@ -160,16 +160,16 @@ void SideOrderBook::add(const Order& order) {
     p_order_book->order_map[order.id] = {
             &price_to_queue[order.price], it
     };
-    Feed f{DEPTH, bid? BID: ASK, order.price, price_to_queue[order.price].quantity, MODIFY, order.time};
+    Feed f{DEPTH, (cmp == greater_than)? BID: ASK, order.price, price_to_queue[order.price].quantity, MODIFY, order.time};
     push_feed(f);
 }
 
 
 void SideOrderBook::match(Order& order) {
-    bool bid = (this->cmp == greater_than);
-    bool ask = (this->cmp == less_than);
-    assert(bid || ask);
-    assert(!(bid && ask));
+    // bool bid = (this->cmp == greater_than);
+    // bool ask = (this->cmp == less_than);
+    // assert(bid || ask);
+    // assert(!(bid && ask));
 
     while ((!this->empty()) && (order.quant > 0) && (cmp(this->peek(), order.price) || this->peek() == order.price)) {
         O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
@@ -181,12 +181,12 @@ void SideOrderBook::match(Order& order) {
         
 
         if (q_aftr == 0) {
-            Feed f{DEPTH, bid? BID: ASK, p, 0, DELETE, order.time};
+            Feed f{DEPTH, (cmp == greater_than)? BID: ASK, p, 0, DELETE, order.time};
             push_feed(f);
             this->erase(this->peek());
             continue;
         }
-        Feed f{DEPTH, bid? BID: ASK, p, q_aftr, MODIFY, order.time};
+        Feed f{DEPTH, (cmp == greater_than)? BID: ASK, p, q_aftr, MODIFY, order.time};
         push_feed(f);
     }
 }

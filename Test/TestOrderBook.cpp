@@ -30,9 +30,5 @@ int main() {
         ofs.close();
         assert(is_same_file("TestOrderBook_output2", "Test/TestOrderBook_output2"));
     }
-    
-
-    
-
     return 0;
 }
