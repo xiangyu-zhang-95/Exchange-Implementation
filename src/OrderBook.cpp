@@ -68,37 +68,6 @@ void OrderBook::process_limit_order(const Order& order) {
         put_side.add(remain);
     }
     return;
-    
-
-    // if (order.side == O_Side::BUY) {
-    //     if (ask.empty() || (order.price < ask.peek())) {
-    //         if (order.tif == IOC) {
-    //             return;
-    //         }
-    //         bid.add(order);
-    //         return;
-    //     }
-    //     Order remain(order);
-    //     ask.match(remain);
-    //     if ((remain.quant > 0) && (remain.tif != IOC)) {
-    //         bid.add(remain);
-    //     }
-    //     return;
-    // }
-
-    // if (bid.empty() || (order.price > bid.peek())) {
-    //     if (order.tif == IOC) {
-    //         return;
-    //     }
-    //     ask.add(order);
-    //     return;
-    // }
-    // Order remain(order);
-    // bid.match(remain);
-    // if ((remain.quant > 0) && (remain.tif != IOC)) {
-    //     ask.add(remain);
-    // }
-    // return;
 }
 
 void OrderBook::publish() {
