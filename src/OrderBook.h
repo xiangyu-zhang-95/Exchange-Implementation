@@ -10,19 +10,24 @@
 #include "Order.h"
 #include "OrderQueue.h"
 #include <fstream>
+#include <type_traits>
+
 
 class OrderBook;
 
-template<class comparator>
+typedef bool (*comparator) (Price4, Price4);
+
+// template<class comparator>
 class SideOrderBook {
-    using cmp = comparator;
+    // using cmp = comparator;
     friend class OrderBook;
 public:
-    SideOrderBook(OrderBook* ptr): p_order_book{ptr} {
-        bool bid = std::is_same<comparator, greater_than>::value;
-        bool ask = std::is_same<comparator, less_than>::value;
-        assert(bid || ask);
-        assert(!(bid && ask));
+    SideOrderBook(OrderBook* ptr, comparator cmp): p_order_book{ptr}, cmp{cmp}, prices{cmp} {
+        // bool bid = std::is_same<comparator, greater_than>::value;
+        // bool ask = std::is_same<comparator, less_than>::value;
+        // assert(bid || ask);
+        // assert(!(bid && ask));
+        // prices = 
     }
 
     SideOrderBook(const SideOrderBook&) = delete;
@@ -44,7 +49,12 @@ public:
     void match(Order& order);
 
 private:
-    std::set<Price4, comparator> prices;
+    comparator cmp;
+    // using Cmp = std::integral_constant<decltype(cmp), cmp>;
+
+    // std::set<Price4, Cmp> prices;
+    // std::set<int, bool(*)(int, int)> mySet(&xz_less_than);
+    std::set<Price4, bool(*)(Price4, Price4)> prices;
     std::unordered_map<Price4, OrderQueue> price_to_queue;
     OrderBook* p_order_book;
 
@@ -52,20 +62,21 @@ private:
 };
 
 class OrderBook {
-    using BidOrderBook = SideOrderBook<greater_than>;
-    using AskOrderBook = SideOrderBook<less_than>;
-    template<class comparator> friend class SideOrderBook;
+    // using BidOrderBook = SideOrderBook<greater_than>;
+    // using AskOrderBook = SideOrderBook<less_than>;
+    // template<class comparator>
+    friend class SideOrderBook;
 
 public:
-    OrderBook(std::ostream* ptr): bid{this}, ask{this}, p_ofs{ptr} {}
+    OrderBook(std::ostream* ptr): bid{this, greater_than}, ask{this, less_than}, p_ofs{ptr} {}
     OrderBook(const OrderBook&) = delete;
     OrderBook& operator=(const OrderBook&) = delete;
 
     void process(const Order& order);
 
 private:
-    BidOrderBook bid;
-    AskOrderBook ask;
+    SideOrderBook bid;
+    SideOrderBook ask;
     std::unordered_map<O_Id, 
         std::pair<OrderQueue*, std::list<Order>::iterator>
     > order_map;

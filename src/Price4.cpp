@@ -71,6 +71,16 @@ std::size_t std::hash<Price4>::operator()(const Price4& p) const {
     return hash<long>()(p.unscaled());
 }
 
-bool less_than::operator()(Price4 a, Price4 b) const {return a < b;}
+bool less_than(Price4 a, Price4 b) {
+    return a < b;
+}
 
-bool greater_than::operator()(Price4 a, Price4 b) const {return b < a;}
+bool greater_than(Price4 a, Price4 b) {
+    return b < a;
+}
+
+
+
+// bool less_than::operator()(Price4 a, Price4 b) const {return a < b;}
+
+// bool greater_than::operator()(Price4 a, Price4 b) const {return b < a;}

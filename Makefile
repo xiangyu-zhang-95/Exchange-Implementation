@@ -42,6 +42,7 @@ test-all:
 	make test-order_flow
 	make test-feed
 	make test-order_book
+	make test-order_match
 
 clean:
 	rm -f test1 TestOrderBook_output1 TestOrderBook_output2
@@ -56,7 +57,7 @@ clean:
 	rm -f TestOrderMatch_output1
 
 order_book:
-	g++ $(FLAGS) main.cpp src/OrderQueue.cpp src/Feed.cpp src/OrderBook.cpp src/Price4.cpp src/ErrorMessage.cpp src/Order.cpp -o test1
+	g++ main.cpp -o test1
 	./test1
 
 syntax:

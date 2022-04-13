@@ -61,8 +61,11 @@ void OrderBook::process_market_order(const Order& order) {
 }
 
 void OrderBook::process_limit_order(const Order& order) {
+    std::cout << "into process limit" << std::endl;
     if (order.side == O_Side::BUY) {
+        std::cout << "into process limit buy" << std::endl;
         if (ask.empty() || (order.price < ask.peek())) {
+            std::cout << "into this branch" << std::endl;
             if (order.tif == IOC) {
                 return;
             }
@@ -101,6 +104,7 @@ void OrderBook::publish() {
 }
 
 void OrderBook::process(const Order& order) {
+    std::cout << "into process" << std::endl;
     if (order.type == O_Type::CANCEL) {
         this->process_cancel(order);
         this->publish();
@@ -126,25 +130,33 @@ void OrderBook::process(const Order& order) {
     SideOrderBook method.
 */
 
-template<class comparator>
-void SideOrderBook<comparator>::erase(Price4 p) {
+// template<class comparator>
+// void SideOrderBook<comparator>::erase(Price4 p) {
+void SideOrderBook::erase(Price4 p) {
     price_to_queue.erase(p);
     prices.erase(p);
 }
 
-template<class comparator>
-void SideOrderBook<comparator>::push_feed(const Feed& feed) {
+// template<class comparator>
+// void SideOrderBook<comparator>::push_feed(const Feed& feed) {
+void SideOrderBook::push_feed(const Feed& feed) {
     this->p_order_book->dq_feed.push_back(feed);
 }
 
-template<class comparator>
-void SideOrderBook<comparator>::add(const Order& order) {
-    bool bid = std::is_same<comparator, greater_than>::value;
-    bool ask = std::is_same<comparator, less_than>::value;
+// template<class comparator>
+// void SideOrderBook<comparator>::add(const Order& order) {
+void SideOrderBook::add(const Order& order) {
+    // bool bid = std::is_same<comparator, greater_than>::value;
+    // bool ask = std::is_same<comparator, less_than>::value;
+    std::cout << "into SideOrderBook add" << std::endl;
+    bool bid = (this->cmp == greater_than);
+    bool ask = (this->cmp == less_than);
     assert(bid || ask);
     assert(!(bid && ask));
+    std::cout << "into SideOrderBook add after" << std::endl;
 
     if (prices.find(order.price) == prices.end()) {
+        std::cout << "into SideOrderBook add after branch1" << std::endl;
         prices.insert(order.price);
         
         price_to_queue[order.price] = OrderQueue(order.price);
@@ -158,6 +170,7 @@ void SideOrderBook<comparator>::add(const Order& order) {
         push_feed(f);
         return;
     }
+    std::cout << "into SideOrderBook add after branch2" << std::endl;
 
     auto it = price_to_queue[order.price].add(order);
     p_order_book->order_map[order.id] = {
@@ -168,14 +181,18 @@ void SideOrderBook<comparator>::add(const Order& order) {
 }
 
 
-template<class comparator>
-void SideOrderBook<comparator>::match(Order& order) {
-    bool bid = std::is_same<comparator, greater_than>::value;
-    bool ask = std::is_same<comparator, less_than>::value;
+// template<class comparator>
+// void SideOrderBook<comparator>::match(Order& order) {
+void SideOrderBook::match(Order& order) {
+    // bool bid = std::is_same<comparator, greater_than>::value;
+    // bool ask = std::is_same<comparator, less_than>::value;
+    bool bid = (this->cmp == greater_than);
+    bool ask = (this->cmp == less_than);
     assert(bid || ask);
     assert(!(bid && ask));
 
-    while ((!this->empty()) && (order.quant > 0) && (comparator()(this->peek(), order.price) || this->peek() == order.price)) {
+    // while ((!this->empty()) && (order.quant > 0) && (comparator()(this->peek(), order.price) || this->peek() == order.price)) {
+    while ((!this->empty()) && (order.quant > 0) && (cmp(this->peek(), order.price) || this->peek() == order.price)) {
         O_Quant q_prev = this->price_to_queue[this->peek()].quantity;
         Price4 p = this->peek();
         this->price_to_queue[this->peek()].match_and_update(

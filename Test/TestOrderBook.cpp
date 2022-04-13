@@ -15,6 +15,7 @@ int main() {
         OrderFlow order_flow{"Test/TestOrderBook_OrderFlow1.jsonl"};
         while (!order_flow.empty()) {
             order_book.process(order_flow.pop());
+            cout << "here" << endl;
         }
         ofs.close();
         assert(is_same_file("TestOrderBook_output1", "Test/TestOrderBook_output1"));

@@ -42,12 +42,15 @@ struct std::hash<Price4>
 };
 
 
-struct less_than{
-    bool operator()(Price4 a, Price4 b) const;
-};
+bool less_than(Price4 a, Price4 b);
+bool greater_than(Price4 a, Price4 b);
 
-struct greater_than{
-    bool operator()(Price4 a, Price4 b) const;
-};
+// struct less_than{
+//     bool operator()(Price4 a, Price4 b) const;
+// };
+
+// struct greater_than{
+//     bool operator()(Price4 a, Price4 b) const;
+// };
 
 #endif
