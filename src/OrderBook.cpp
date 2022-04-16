@@ -11,7 +11,7 @@
 
 OrderBook::OrderBook(std::string file_name):
 bid{this, greater_than}, ask{this, less_than} {
-    ofs.open(file_name, std::ios::out | std::ios::app);
+    ofs.open(file_name, std::ios::out);
 }
 
 
