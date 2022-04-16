@@ -38,6 +38,10 @@ test-exchange: Test/TestExchange.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestExchange.cpp $(SRC) -o test1
 	./test1
 
+test-demo: Test/TestDemo.cpp $(SRC) $(HEAD)
+	g++ $(FLAGS) Test/TestDemo.cpp $(SRC) -o test1
+	./test1
+
 test-all:
 	make test-error_msg
 	make test-price4
@@ -48,6 +52,8 @@ test-all:
 	make test-order_book
 	make test-order_match
 	make test-exchange
+	make clean
+	make test-demo
 	make clean
 
 clean:
