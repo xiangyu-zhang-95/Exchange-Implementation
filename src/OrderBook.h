@@ -29,15 +29,7 @@ public:
     void erase(Price4 p);
     bool empty() {return prices.empty();}
     Price4 peek() {Price4 p = *(prices.begin()); return p;}
-    // TODO: add a new limit order and publish feed
-    //       update order_map
     void add(const Order& order);
-    
-    // TODO: generate trades publish feed
-    //       orders are of type MARKET, NEW, ICEBERG
-    //       update order_map
-    //       When call finishes, order argument is updated 
-    //          to unmatched portion.
     void match(Order& order);
 
 private:

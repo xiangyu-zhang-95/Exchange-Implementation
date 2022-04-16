@@ -19,8 +19,6 @@ public:
     std::list<Order>::iterator add(const Order&);
 
     std::list<Order>::iterator peek() {return dq_visible.begin();};
-    // TODO: match order with this queue. Delete order if all shared matched. 
-    //          Publish Trade Feed per match.
     void match_and_update(Order&, 
                         std::unordered_map<O_Id, std::pair<OrderQueue*, std::list<Order>::iterator>>&,
                         std::deque<Feed>&
