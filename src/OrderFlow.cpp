@@ -20,4 +20,5 @@ OrderFlow::OrderFlow(string file_name){
         Order order{j};
         l.push_back(order);
     }
+    ifs.close();
 }
