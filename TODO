@@ -1,4 +1,0 @@
-make Price4 asap
-Why I need default constructor for OrderQueue
-restructure SideOrderBook class to take O_Side as param
-Refact Order class s.t. each field is well-initialized
