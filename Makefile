@@ -1,5 +1,5 @@
-HEAD = src/OrderQueue.h   src/Feed.h   src/OrderBook.h   src/OrderFlow.h   Test/TestUtility.h   src/Price4.h   src/ErrorMessage.h   src/TickerSize.h   src/Order.h
-SRC  = src/OrderQueue.cpp src/Feed.cpp src/OrderBook.cpp src/OrderFlow.cpp Test/TestUtility.cpp src/Price4.cpp src/ErrorMessage.cpp src/TickerSize.cpp src/Order.cpp
+HEAD = src/OrderQueue.h   src/Feed.h   src/OrderBook.h   src/OrderFlow.h   Test/TestUtility.h   src/Price4.h   src/ErrorMessage.h   src/TickerSize.h   src/Order.h   src/Exchange.h
+SRC  = src/OrderQueue.cpp src/Feed.cpp src/OrderBook.cpp src/OrderFlow.cpp Test/TestUtility.cpp src/Price4.cpp src/ErrorMessage.cpp src/TickerSize.cpp src/Order.cpp src/Exchange.cpp
 FLAGS = --std=c++11
 
 test-error_msg: Test/TestErrorMsg.cpp $(SRC) $(HEAD)
@@ -34,6 +34,10 @@ test-order_match: Test/TestOrderMatch.cpp $(SRC) $(HEAD)
 	g++ $(FLAGS) Test/TestOrderMatch.cpp $(SRC) -o test1
 	./test1
 
+test-exchange: Test/TestExchange.cpp $(SRC) $(HEAD)
+	g++ $(FLAGS) Test/TestExchange.cpp $(SRC) -o test1
+	./test1
+
 test-all:
 	make test-error_msg
 	make test-price4
@@ -43,6 +47,8 @@ test-all:
 	make test-feed
 	make test-order_book
 	make test-order_match
+	make test-exchange
+	make clean
 
 clean:
 	rm -f test1 TestOrderBook_output1 TestOrderBook_output2
@@ -56,6 +62,7 @@ clean:
 	rm -f TestTickerSize_output error_msg TestOrderFlowOutput
 	rm -f TestOrderMatch_output1
 	rm -f a_test_file
+	rm -f output/*
 
 order_book: $(SRC) $(HEAD)
 	g++ --std=c++11 main.cpp $(SRC) -o test1
