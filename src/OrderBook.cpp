@@ -8,6 +8,13 @@
 /*
     OrderBook methods.
 */
+
+OrderBook::OrderBook(std::string file_name):
+bid{this, greater_than}, ask{this, less_than} {
+    ofs.open(file_name, std::ios::out | std::ios::app);
+}
+
+
 void OrderBook::process_cancel(const Order& order) {
     OrderQueue* ptr_order_queue = order_map[order.id].first;
     auto it = order_map[order.id].second;
@@ -73,7 +80,7 @@ void OrderBook::process_limit_order(Order& order) {
 void OrderBook::publish() {
     while (!dq_feed.empty()){
         Feed f = dq_feed.front();
-        (*p_ofs) << f << std::endl;
+        ofs << f << std::endl;
         dq_feed.pop_front();
     }
 }

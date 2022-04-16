@@ -55,9 +55,10 @@ clean:
 	rm -f TestOrderBook_output1 TestFeedOutput test1 TestOrderOutput 
 	rm -f TestTickerSize_output error_msg TestOrderFlowOutput
 	rm -f TestOrderMatch_output1
+	rm -f a_test_file
 
-order_book:
-	g++ main.cpp -o test1
+order_book: $(SRC) $(HEAD)
+	g++ --std=c++11 main.cpp $(SRC) -o test1
 	./test1
 
 syntax:

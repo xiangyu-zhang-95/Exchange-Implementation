@@ -45,11 +45,13 @@ class OrderBook {
     friend class SideOrderBook;
 
 public:
-    OrderBook(std::ostream* ptr): bid{this, greater_than}, ask{this, less_than}, p_ofs{ptr} {}
+    // OrderBook(std::ostream* ptr): bid{this, greater_than}, ask{this, less_than}, p_ofs{ptr} {}
+    OrderBook(std::string file_name);
     OrderBook(const OrderBook&) = delete;
     OrderBook& operator=(const OrderBook&) = delete;
 
     void process(const Order& order);
+    ~OrderBook() {ofs.close();}
 
 private:
     SideOrderBook bid;
@@ -58,7 +60,7 @@ private:
         std::pair<OrderQueue*, std::list<Order>::iterator>
     > order_map;
     std::deque<Feed> dq_feed;
-    std::ostream* p_ofs;
+    std::ofstream ofs;
 
     void process_cancel(const Order& order);
     void process_limit_order(Order& order);
