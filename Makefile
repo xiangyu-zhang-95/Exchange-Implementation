@@ -68,11 +68,12 @@ clean:
 	rm -f TestTickerSize_output error_msg TestOrderFlowOutput
 	rm -f TestOrderMatch_output1
 	rm -f a_test_file
+	rm -f demo
 	rm -f output/*
 
-order_book: $(SRC) $(HEAD)
-	g++ --std=c++11 main.cpp $(SRC) -o test1
-	./test1
+demo: $(SRC) $(HEAD) main.cpp
+	g++ $(FLAGS) main.cpp $(SRC) -o demo
+	./demo
 
 syntax:
 	g++ $(FLAGS) syntax.cpp -o syntax
